@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fight</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            overflow: hidden; /* Voorkom dat de pagina horizontaal scrollt */
+        }
+
+        .player {
+    width: 100px;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+    font-size: 20px;
+    position: relative;
+}
+
+        #player1 {
+            order: 1; /* Zet speler 1 aan de linkerkant */
+        }
+
+        #player2 {
+            order: 3; /* Zet speler 2 aan de rechterkant */
+        }
+
+  
+    </style>
+</head>
+<body>
+
+
+    <div class="player" id="player1">
+        Player 1
+       
+    </div>
+    <div class="player" id="player2">
+        Player 2
+    </div>
+
+    <div class="log"></div>
+
+
+    <script src="../js/move.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Your Fighters</title>
+    <style>
+        .fighter {
+            display: inline-block;
+            width: 100px;
+            height: 100px;
+            margin: 20px;
+            cursor: pointer;
+        }
+
+        #readyButton {
+            display: none; /* Verberg de ready knop standaard */
+        }
+    </style>
+</head>
+<body>
+    <h1>Player 1: Choose Your Fighter</h1>
+    <div class="fighter" id="fighter1" style="background-color: red;"></div>
+    <div class="fighter" id="fighter2" style="background-color: blue;"></div>
+    <div class="fighter" id="fighter3" style="background-color: green;"></div>
+    <div class="fighter" id="fighter4" style="background-color: yellow;"></div>
+
+    <h1>Player 2: Choose Your Fighter</h1>
+    <div class="fighter" id="fighter5" style="background-color: orange;"></div>
+    <div class="fighter" id="fighter6" style="background-color: purple;"></div>
+    <div class="fighter" id="fighter7" style="background-color: pink;"></div>
+    <div class="fighter" id="fighter8" style="background-color: cyan;"></div>
+
+    <!-- Ready knop voor spelers -->
+    <button id="readyButton">Ready</button>
+
+    <script>
+        const fighters = document.querySelectorAll('.fighter');
+        const readyButton = document.getElementById('readyButton');
+
+        fighters.forEach(fighter => {
+            fighter.addEventListener('click', () => {
+                const selectedColor = fighter.style.backgroundColor;
+                const player = fighter.id.startsWith('fighter') && fighter.id.substring(7) <= 4 ? 1 : 2;
+
+                localStorage.setItem(`player${player}SelectedFighter`, selectedColor);
+
+                // Als beide spelers een fighter hebben gekozen, toon de ready knop
+                if (localStorage.getItem('player1SelectedFighter') && localStorage.getItem('player2SelectedFighter')) {
+                    readyButton.style.display = 'block';
+                }
+            });
+        });
+
+        // Event listener voor de ready knop
+        readyButton.addEventListener('click', () => {
+            window.location.href = 'fight.html'; // Ga naar de fight pagina
+        });
+    </script>
+</body>
+</html>
