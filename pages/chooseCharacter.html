@@ -4,58 +4,137 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Choose Your Fighters</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
     <style>
-        .fighter {
-            display: inline-block;
-            width: 100px;
-            height: 100px;
-            margin: 20px;
-            cursor: pointer;
+        body {
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            font-family: "Pixelify Sans", sans-serif;
+            font-optical-sizing: auto;
+            font-style: normal;        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
         }
 
+        .fighters-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .fighter {
+            width: 100px;
+            height: 100px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: border-color 0.3s ease;
+        }
+
+        .fighter:hover {
+            border-color: #fff;
+        }
+        #readydiv {
+       
+        display: flex; 
+        justify-content: center;  
+        margin: 0;
+        padding: 0;
+  }   
+
         #readyButton {
-            display: none; /* Verberg de ready knop standaard */
+            margin-top: 5vh;
+            display: none;
+            background-color: #ff4242;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #readyButton:hover {
+            background-color: #ff6363;
+        }
+
+        /* Align Player 1 and Player 2 */
+        #player1 {
+            margin-right: 5vw;
+        }
+
+        #player2 {
+            margin-left: 5vw;
         }
     </style>
 </head>
 <body>
-    <h1>Player 1: Choose Your Fighter</h1>
-    <div class="fighter" id="fighter1" style="background-color: red;"></div>
-    <div class="fighter" id="fighter2" style="background-color: blue;"></div>
-    <div class="fighter" id="fighter3" style="background-color: green;"></div>
-    <div class="fighter" id="fighter4" style="background-color: yellow;"></div>
+    <h1>Choose Your Fighters</h1>
+    <div class="fighters-container">
+        <div id="player1">
+            <h2>Player 1</h2>
+            <div class="fighter" id="fighter1" style="background-color: red;"></div>
+            <div class="fighter" id="fighter2" style="background-color: blue;"></div>
+            <div class="fighter" id="fighter3" style="background-color: green;"></div>
+            <div class="fighter" id="fighter4" style="background-color: yellow;"></div>
+        </div>
+        <div id="player2">
+            <h2>Player 2</h2>
+            <div class="fighter" id="fighter5" style="background-color: orange;"></div>
+            <div class="fighter" id="fighter6" style="background-color: purple;"></div>
+            <div class="fighter" id="fighter7" style="background-color: pink;"></div>
+            <div class="fighter" id="fighter8" style="background-color: cyan;"></div>
+        </div>
+    </div>
 
-    <h1>Player 2: Choose Your Fighter</h1>
-    <div class="fighter" id="fighter5" style="background-color: orange;"></div>
-    <div class="fighter" id="fighter6" style="background-color: purple;"></div>
-    <div class="fighter" id="fighter7" style="background-color: pink;"></div>
-    <div class="fighter" id="fighter8" style="background-color: cyan;"></div>
+    <!-- Ready button for players -->
+    <div id="readydiv">
+<button id="readyButton" style="display: none;">Ready</button>
+    </div>
+<script>
+    const fightersPlayer1 = Array.from(document.querySelectorAll('#player1 .fighter'));
+    const fightersPlayer2 = Array.from(document.querySelectorAll('#player2 .fighter'));
+    const readyButton = document.getElementById('readyButton');
 
-    <!-- Ready knop voor spelers -->
-    <button id="readyButton">Ready</button>
+    let player1Selected = null;
+    let player2Selected = null;
 
-    <script>
-        const fighters = document.querySelectorAll('.fighter');
-        const readyButton = document.getElementById('readyButton');
-
-        fighters.forEach(fighter => {
-            fighter.addEventListener('click', () => {
-                const selectedColor = fighter.style.backgroundColor;
-                const player = fighter.id.startsWith('fighter') && fighter.id.substring(7) <= 4 ? 1 : 2;
-
-                localStorage.setItem(`player${player}SelectedFighter`, selectedColor);
-
-                // Als beide spelers een fighter hebben gekozen, toon de ready knop
-                if (localStorage.getItem('player1SelectedFighter') && localStorage.getItem('player2SelectedFighter')) {
-                    readyButton.style.display = 'block';
-                }
-            });
+    fightersPlayer1.forEach(fighter => {
+        fighter.addEventListener('click', () => {
+            player1Selected = fighter.style.backgroundColor;
+            localStorage.setItem('player1SelectedFighter', player1Selected);
+            checkReady();
         });
+    });
 
-        // Event listener voor de ready knop
-        readyButton.addEventListener('click', () => {
-            window.location.href = 'fight.html'; // Ga naar de fight pagina
+    fightersPlayer2.forEach(fighter => {
+        fighter.addEventListener('click', () => {
+            player2Selected = fighter.style.backgroundColor;
+            localStorage.setItem('player2SelectedFighter', player2Selected);
+            checkReady();
         });
-    </script>
+    });
+
+    function checkReady() {
+        if (player1Selected !== null && player2Selected !== null) {
+            readyButton.style.display = 'block';
+        } else {
+            readyButton.style.display = 'none';
+        }
+    }
+
+    // Event listener for the ready button
+    readyButton.addEventListener('click', () => {
+        window.location.href = 'fight.html'; // Go to the fight page
+    });
+</script>
 </body>
 </html>
